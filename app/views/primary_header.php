@@ -1,4 +1,4 @@
 <header>
-	RockIT Bootcamp
+	<h1>Welcome, honey!</h1>
 </header>
 <hr>

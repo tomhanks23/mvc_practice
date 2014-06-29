@@ -12,6 +12,6 @@ define('LIVE_SITE', FALSE);
 *****************************************/
 
 define('DB_HOST', 'localhost');
-define('DB_USER', 'bootcamp');
-define('DB_PASS', 'bootcamp');
-define('DB_NAME', 'bootcamp');
+define('DB_USER', 'root');
+define('DB_PASS', 'rockit');
+define('DB_NAME', 'mom-kid');

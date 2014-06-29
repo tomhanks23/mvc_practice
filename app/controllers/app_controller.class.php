@@ -17,9 +17,11 @@ class AppController extends BaseController {
 	 * Set View
 	 */
 	protected function set_view() {
-		// $this->view = new View(ROOT . '/mvc_practice/app/views/main.php');
-		// $this->view->primary_header = new View(ROOT . '/mvc_practice/app/views/primary_header.php');
-		$this->view = new View(ROOT . '/mvc_practice/app/views/shop-homepage.php');
+		$this->view = new View(ROOT . '/mvc_practice/app/views/main.php');
+		$this->view->primary_header = new View(ROOT . '/mvc_practice/app/views/primary_header.php');
+
+		// for the home page view
+		$this->view->home_page = new View(ROOT . '/mvc_practice/app/views/shop-homepage.php');
 	}
 
 	/**

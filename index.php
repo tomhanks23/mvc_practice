@@ -9,7 +9,7 @@ class Controller extends AppController {
 		parent::__construct();
 
 		// Create welcome variable in view
-		$this->view->welcome = 'Welcome to MVC';
+		// $this->view->welcome = 'Welcome to MVC';
 	}
 
 }
@@ -20,4 +20,4 @@ extract($controller->view->vars);
 
 ?>
 
-<h1><?php echo $welcome; ?></h1>
+<?php echo $home_page ?>
