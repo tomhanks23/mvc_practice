@@ -8,10 +8,15 @@ class Controller extends AppController {
     public function __construct() {
         parent::__construct();
 
-        // Create welcome variable in view
-        // $this->view->welcome = 'Welcome to MVC';
+        session_start();
 
-        $product_id = $_GET['product_id'];
+        if (isset($_GET['product_id']) && !empty($_GET['product_id'])) {
+
+            $_SESSION['cur_product_id'] = $_GET['product_id'];
+
+        }
+
+        $product_id = $_SESSION['cur_product_id'];
 
         // Write SQL Statement
         $sql = "
@@ -27,6 +32,8 @@ class Controller extends AppController {
 
         $this->view->product = $row;
 
+        
+
     }
 
 }
@@ -39,6 +46,11 @@ extract($controller->view->vars);
 
 <div class="container">
 
+    <div class="overlay">
+        <?php echo $login; ?>
+        <?php echo $register; ?>
+    </div>
+
     <div class="row">
 
         <?php echo $list_menu; ?>
@@ -46,27 +58,25 @@ extract($controller->view->vars);
         <div class="col-md-9">
 
             <div class="thumbnail">
-                <!-- <img class="img-responsive" src="http://placehold.it/800x300" alt=""> -->
-                <img src="<?php echo 'user_upload/products/' . $product['name']; ?>" alt="">
+                <img class="product-img" src="<?php echo 'user_upload/products/' . $product['name']; ?>" alt="">
                 <div class="caption-full">
-                    <h4 class="pull-right"><?php echo '$' . $product['price']; ?></h4>
-                    <h4><?php echo pathinfo($product['name'])['filename'] ?></h4>
+                    <form action="inline_item.php">
+                        <h4><?php echo 'Name: ' . pathinfo($product['name'])['filename'] ?></h4>
+                        <h4><?php echo 'SKU: ' . $product['sku'] ?></h4>
+                        <h4><?php echo 'In Stock: ' . $product['inventory'] ?></h4></h4>
+                        <h4><?php echo 'Price: $' . $product['price']; ?></h4>
+                        <h4>Qty: <input style="width: 50px;" name="qty"></h4>
+                        <button type="submit" id="add-to-cart">Add to cart</button>
+                    </form>
+                    <hr>
+                </div>
+                <div class="sibiling-div">
+                    <h4>Description</h4>
                     <p><?php echo $product['description'] ?></p>
                 </div>
-                <!-- <div class="ratings">
-                    <p class="pull-right">3 reviews</p>
-                    <p>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star-empty"></span>
-                        4.0 stars
-                    </p>
-                </div> -->
             </div>
 
-            <div class="well">
+            <!-- <div class="well">
 
                 <div class="text-right">
                     <a class="btn btn-success">Leave a Review</a>
@@ -76,11 +86,6 @@ extract($controller->view->vars);
 
                 <div class="row">
                     <div class="col-md-12">
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star-empty"></span>
                         Anonymous
                         <span class="pull-right">10 days ago</span>
                         <p>This product was great in terms of quality. I would definitely buy another!</p>
@@ -89,35 +94,7 @@ extract($controller->view->vars);
 
                 <hr>
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star-empty"></span>
-                        Anonymous
-                        <span class="pull-right">12 days ago</span>
-                        <p>I've alredy ordered another one!</p>
-                    </div>
-                </div>
-
-                <hr>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star-empty"></span>
-                        Anonymous
-                        <span class="pull-right">15 days ago</span>
-                        <p>I've seen some better than this, but not at this price. I definitely recommend this item.</p>
-                    </div>
-                </div>
-
-            </div>
+            </div> -->
 
         </div>
 
@@ -128,3 +105,4 @@ extract($controller->view->vars);
 
 
 <?php echo $copyright; ?>
+

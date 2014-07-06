@@ -22,6 +22,11 @@ class AppController extends BaseController {
 		$this->view->copyright = new View(ROOT . '/mvc_practice/app/views/copyright.php');
 		$this->view->list_menu = new View(ROOT . '/mvc_practice/app/views/list_menu.php');
 
+		// for the log in form
+		$this->view->login = new View(ROOT . '/mvc_practice/app/views/login.php');
+		// for the register form
+		$this->view->register = new View(ROOT . '/mvc_practice/app/views/register.php');	
+
 		// for the item detail page view
 		$this->view->detail_page = new View(ROOT . '/mvc_practice/app/views/detail_page.php');
 

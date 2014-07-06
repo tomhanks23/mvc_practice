@@ -1,0 +1,29 @@
+{
+  "name": "ReptileForms",
+  "homepage": "https://github.com/bradwestfall/ReptileForms",
+  "authors": [
+    "Brad Westfall <brad@azpixels.com>"
+  ],
+  "main": [
+    "dist/reptileforms.min.js",
+    "dist/reptileforms.min.css"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "vendors",
+    "test",
+    "tests"
+  ],
+  "version": "0.1.14",
+  "_release": "0.1.14",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.1.14",
+    "commit": "ba0066ddb8a0e24b136a131245924888c867fd06"
+  },
+  "_source": "git://github.com/bradwestfall/ReptileForms.git",
+  "_target": "~0.1.7",
+  "_originalSource": "ReptileForms"
+}

@@ -19,7 +19,7 @@
 	<?php echo Payload::get_css(); ?>
 
 	<!-- Modernizr -->
-	<!-- <script src="/bower_components/modernizr/modernizr.js"></script> -->
+	<!-- <script src="/mvc_practice/bower_components/modernizr/modernizr.js"></script> -->
 
 </head>
 <body>
@@ -30,11 +30,11 @@
 	</div>
 
 	<!-- Include Common Scripts -->
-	<!-- <script src="/bower_components/jquery/dist/jquery.js"></script> -->
-	<!-- <script src="/bower_components/ReptileForms/dist/reptileforms.js"></script> -->
-
     <script src="js/jquery-1.10.2.js"></script>
-    <script src="js/bootstrap.js"></script>
+    <script src="js/bootstrap.js"></script> 
+
+	<!-- <script src="/mvc_practice/bower_components/jquery/dist/jquery.js"></script> -->
+	<script src="/mvc_practice/bower_components/ReptileForms/dist/reptileforms.js"></script>
 
 	<!-- Get JS -->
 	<script>var app = {};app.settings=<?php echo Payload::get_settings(); ?>;</script>

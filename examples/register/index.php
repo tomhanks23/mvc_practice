@@ -1,7 +1,7 @@
 <?php
 
 // Init
-include($_SERVER['DOCUMENT_ROOT'] . '/app/core/initialize.php');
+include($_SERVER['DOCUMENT_ROOT'] . '/mvc_practice/app/core/initialize.php');
 
 // Controller
 class Controller extends AppController {
@@ -9,8 +9,8 @@ class Controller extends AppController {
 		parent::__construct();
 
 		// Add Files Payload
-		Payload::js('/examples/register/register.js');
-		Payload::css('/bower_components/ReptileForms/dist/reptileforms.min.css');
+		Payload::js('/mvc_practice/examples/register/register.js');
+		Payload::css('/mvc_practice/bower_components/ReptileForms/dist/reptileforms.min.css');
 
 		// More code could go here depending on what you want to do with this page
 

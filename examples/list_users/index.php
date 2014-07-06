@@ -1,7 +1,7 @@
 <?php
 
 // Init
-include($_SERVER['DOCUMENT_ROOT'] . '/app/core/initialize.php');
+include($_SERVER['DOCUMENT_ROOT'] . '/mvc_practice/app/core/initialize.php');
 
 // Controller
 class Controller extends AppController {

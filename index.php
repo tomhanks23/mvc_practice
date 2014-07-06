@@ -8,8 +8,8 @@ class Controller extends AppController {
 	public function __construct() {
 		parent::__construct();
 
-		// Create welcome variable in view
-		// $this->view->welcome = 'Welcome to MVC';
+        session_start();
+
 	}
 
 }
@@ -22,6 +22,10 @@ extract($controller->view->vars);
 
 <div class="container">
 
+    <div class="overlay">
+        <?php echo $login; ?>
+        <?php echo $register; ?>
+    </div>
     <div class="row">
 
         <?php echo $list_menu; ?>
