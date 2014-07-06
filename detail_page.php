@@ -32,8 +32,6 @@ class Controller extends AppController {
 
         $this->view->product = $row;
 
-        
-
     }
 
 }

@@ -4,13 +4,7 @@
         
         <?php
 
-        $url_string = $_SERVER['SCRIPT_FILENAME'];
-
-        if ( strstr($url_string, $substring) == 'index.php' ) {
-          $action_forward = 'index.php';
-        } else {
-          $action_forward = 'detail_page.php'; 
-        }
+        $action_forward = $_SESSION['action_forward'];
 
         ?>
 
@@ -20,6 +14,7 @@
           <input type="text" name="email" title="E-mail" placeholder="E-mail" required><br>
           <input type="password" name="password" title="Password" placeholder="Password" required><br>
           <input type="password" name="password2" title="Comfirm Password" placeholder="Re-enter Password" required><br><br>
+          <input type="hidden" name="action" value="register">
 
           <button type="submit">Submit</button>
           <button class="close">Close</button>

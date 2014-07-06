@@ -10,6 +10,53 @@ class Controller extends AppController {
 
         session_start();
 
+        $_SESSION['action_forward'] = 'index.php';
+
+        // for register
+        if ( $_POST['action'] == 'register' ) {
+            $sql = "
+                    INSERT INTO user(
+                        user_name,
+                        email,
+                        password
+                        ) VALUES (
+                        '{$_POST['userName']}',
+                        '{$_POST['email']}',
+                        '{$_POST['password']}'
+                        )
+            ";
+
+            $results = db::execute($sql);
+
+            $_SESSION['user_id'] = $results->insert_id;
+            $_SESSION['user_name'] = $_POST['userName'];
+        }
+
+        // for log in
+        if ( $_POST['action'] == 'login' ) {
+            $sql = "
+                    SELECT *
+                      FROM user
+                     WHERE email = '{$_POST['email']}'
+                       AND password = '{$_POST['password']}'
+            ";
+
+            $results = db::execute($sql);
+
+            $row = $results->fetch_assoc();
+
+            if ($row) {
+                $_SESSION['user_id'] = $row['user_id'];
+                $_SESSION['user_name'] = $row['user_name'];
+            }
+        }
+
+        // for log out 
+        if ( $_POST['action'] == 'logout' ) {
+            session_destroy();
+            header('Location: http://localhost/mvc_practice/index.php');
+        }
+
 	}
 
 }
@@ -25,6 +72,7 @@ extract($controller->view->vars);
     <div class="overlay">
         <?php echo $login; ?>
         <?php echo $register; ?>
+        <?php echo $logout; ?>
     </div>
     <div class="row">
 

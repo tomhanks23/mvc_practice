@@ -8,8 +8,21 @@ class Controller extends AppController {
     public function __construct() {
         parent::__construct();
 
-        // Create welcome variable in view
-        // $this->view->welcome = 'Welcome to MVC';
+        session_start();
+
+        $user_id = $_SESSION['user_id'];
+
+        // find order_id which is not payed
+        $sql = "
+          SELECT count(1) 
+            FROM order
+           WHERE user_id = $user_id
+          ";
+
+        // Execute SQL Statement
+        $results = db::execute($sql);
+
+        echo $results;
 
     }
 

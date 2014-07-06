@@ -15,6 +15,12 @@
         $('.register-div').show();
         return false;  
     });
+
+    $('.logout').on('click', function(){
+        $('.overlay').show();
+        $('.logout-div').show();
+        return false;  
+    });
     
     $('.close').on('click', function(){
         $('.overlay').css('display','none');

@@ -23,7 +23,7 @@ header div {
     padding: 1px;
 }
 
-.login-div, .register-div {
+.login-div, .register-div, .logout-div {
     padding: 10px;
     background-color: #FFF;
     min-height: 200px;
