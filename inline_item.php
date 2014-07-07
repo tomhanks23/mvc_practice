@@ -95,12 +95,13 @@ extract($controller->view->vars);
 
 <div class="container">
     <div class="row">
-        <div id="return-shopping">
-            <h2><a href="index.html">Continue shopping</a></h2>
+        <div class="return-shopping">
+            <h4><a href="index.php">Continue shopping</a></h4>
         </div>
+        <div><h4>Your shopping cart - 1 item.</h4></div>
         <div class="sibiling-div"></div>
 
-        <h2>Your shopping cart - 1 item.</h2>
+        
         <div id="inline-item">
             <div id="inline-item-list">
                 <hr>
@@ -113,7 +114,7 @@ extract($controller->view->vars);
                                     <td>Ted Bear</td>
                                     <td>$12.5</td>
                                     <td>&times;</td>
-                                    <td><input type="text" value="1"></td>
+                                    <td><input type="text" value="1" style="width:30px"></td>
                                     <td>$12.5</td>
                                 </tr>
                             </tbody>

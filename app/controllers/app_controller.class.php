@@ -29,9 +29,6 @@ class AppController extends BaseController {
 		// for the log out form
 		$this->view->logout = new View(ROOT . '/mvc_practice/app/views/logout.php');
 
-		// for the item detail page view
-		$this->view->detail_page = new View(ROOT . '/mvc_practice/app/views/detail_page.php');
-
 	}
 
 	/**
