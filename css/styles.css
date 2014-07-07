@@ -1,3 +1,14 @@
+ul {
+    list-style-type: none;
+}
+
+footer {
+    text-align: center; 
+    background-color: lightgray;
+    border-radius: 5px;
+    padding: 10px;
+}
+
 .product-img {
     float: left;
 }
@@ -33,5 +44,71 @@ header div {
     border-radius: 5px;
     display: none;
     z-index: 1000;
+}
+
+/*******************
+    inline-item page
+*******************/
+
+#reurn-shopping {
+    margin-right: 20px;
+    margin-bottom: 10px;
+    float: right;
+    border-radius: 5px;
+    /*background-color: lightgray;*/
+    padding: 5px;
+}
+
+#inline-item {
+    float: left;
+    min-width: 650px;
+}
+
+#total-cost {
+    float: right;
+    margin-right: 30px;
+    font-size: 20px;
+    border-radius: 10px;
+    border: 1px gray solid;
+    padding: 5px;
+}
+
+#total-cost li {
+    margin: 5px;
+    border: 5px;
+}
+
+#total-cost button {
+    font-size: 20px;
+}
+
+.inline-item-img {
+    width: 100px;
+    height: 100px;
+}
+
+#inline-item-list .inline-item-img {
+    margin-right: 350px;
+}
+
+.sibling-for-float hr {
+    margin-bottom: 20px;
+}
+
+#empty-cart {
+    float: left;
+}
+
+#sub-total-count {
+    float: right;
+}
+
+
+
+#header-area-admin{
+    /*background-color: lightgray;*/
+    min-height: 30px;
+    padding: 10px;
+    margin: 10px;
 }
 

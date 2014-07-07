@@ -12,18 +12,77 @@ class Controller extends AppController {
 
         $user_id = $_SESSION['user_id'];
 
+        // for log out 
+        if ( $_POST['action'] == 'logout' ) {
+            session_destroy();
+            header('Location: http://localhost/mvc_practice/index.php');
+        }
+
         // find order_id which is not payed
         $sql = "
-          SELECT count(1) 
-            FROM order
+          SELECT order_id
+            FROM user_order
            WHERE user_id = $user_id
+             AND order_status = 1
           ";
 
         // Execute SQL Statement
         $results = db::execute($sql);
 
-        echo $results;
+        // there are items have not been paid
+        if ( $results->current_field > 0 ) {
+            $order_id = $results->current_field;
 
+        } else {
+            // this is a new order
+            $sql = "
+                INSERT INTO user_order(
+                            user_id,
+                            date_added,
+                            order_status
+                            )
+                     VALUES (
+                            '{$user_id}',
+                            now(),
+                            1
+                            )
+            ";
+            // Execute SQL Statement
+            $results = db::execute($sql);
+
+            $order_id = $results->insert_id;
+        }
+
+        $sql = "
+            INSERT INTO inline_item(
+                        order_id,
+                        product_id,
+                        quantity
+                        )
+                 VALUES (
+                        '{$order_id}',
+                        '{$_SESSION['cur_product_id']}',
+                        '{$_POST['qty']}'
+                        )
+        ";
+
+        // Execute SQL Statement
+        $results = db::execute($sql);
+
+        // show items
+        $sql = "
+            SELECT p.name,
+                   p.price,
+                   i.quantity
+              FROM user_order o, inline_item i, product p
+             WHERE o.order_id = i.order_id
+               AND i.product_id = p.product_id
+               AND o.user_id = '{$_SESSION['user_id']}'
+               AND o.order_status = 1
+        ";
+
+        // Execute SQL Statement
+        $results = db::execute($sql);
     }
 
 }
@@ -94,3 +153,4 @@ extract($controller->view->vars);
 
     </div>
 </div>
+<?php echo $copyright; ?>

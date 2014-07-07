@@ -91,10 +91,10 @@ extract($controller->view->vars);
                         </ol>
                         <div class="carousel-inner">
                             <div class="item active">
-                                <img class="slide-image" src="user_upload/M_DSC3118_bw_sm-800x300.jpg" alt="">
+                                <img class="slide-image" src="user_upload/dreamstime_s_29457499-800x300.jpg" alt="">
                             </div>
                             <div class="item">
-                                <img class="slide-image" src="user_upload/dreamstime_s_29457499-800x300.jpg" alt="">
+                                <img class="slide-image" src="user_upload/M_DSC3118_bw_sm-800x300.jpg" alt="">
                             </div>
                             <div class="item">
                                 <img class="slide-image" src="user_upload/velcro-baby-800x300.jpg" alt="">
@@ -111,8 +111,7 @@ extract($controller->view->vars);
 
             </div>
 
-            <div class="row">
-
+            <div class="row" id="row">
 
                 <?php  
 
