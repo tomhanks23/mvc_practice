@@ -20,7 +20,7 @@ class Controller extends AppController {
 
         // find order_id which is not payed
         $sql = "
-          SELECT order_id
+          SELECT count(*) count
             FROM user_order
            WHERE user_id = $user_id
              AND order_status = 1
@@ -28,10 +28,29 @@ class Controller extends AppController {
 
         // Execute SQL Statement
         $results = db::execute($sql);
+        $row = $results->fetch_assoc();
 
-        // there are items have not been paid
-        if ( $results->current_field > 0 ) {
-            $order_id = $results->current_field;
+        // print_r($results);
+        // echo '<br>';
+        // print_r($row);
+        // echo '<br>';
+        // print_r($row["count"]);
+        // exit();
+
+        if ($row["count"] > 0) {
+            
+            $sql = "
+              SELECT order_id
+                FROM user_order
+               WHERE user_id = $user_id
+                 AND order_status = 1
+              ";
+
+            // Execute SQL Statement
+            $results = db::execute($sql);
+            $row = $results->fetch_assoc();
+
+            $order_id = $row['order_id'];
 
         } else {
             // this is a new order
@@ -53,18 +72,42 @@ class Controller extends AppController {
             $order_id = $results->insert_id;
         }
 
+        // check it has same product in this order before
         $sql = "
-            INSERT INTO inline_item(
-                        order_id,
-                        product_id,
-                        quantity
-                        )
-                 VALUES (
-                        '{$order_id}',
-                        '{$_SESSION['cur_product_id']}',
-                        '{$_POST['qty']}'
-                        )
+            SELECT count(1) count
+              FROM inline_item
+             WHERE order_id = '{$order_id}'
+               AND product_id = '{$_SESSION['cur_product_id']}'
         ";
+        // Execute SQL Statement
+        $results = db::execute($sql);
+        $row = $results->fetch_assoc();
+
+        if ($row["count"] > 0) {
+            
+            $sql = "
+                UPDATE inline_item 
+                   SET quantity = quantity + {$_POST['qty']}
+                 WHERE order_id = '{$order_id}'
+                   AND product_id = '{$_SESSION['cur_product_id']}'
+            ";
+
+        } else {
+
+            $sql = "
+                INSERT INTO inline_item(
+                            order_id,
+                            product_id,
+                            quantity
+                            )
+                     VALUES (
+                            '{$order_id}',
+                            '{$_SESSION['cur_product_id']}',
+                            '{$_POST['qty']}'
+                            )
+            ";
+
+        }
 
         // Execute SQL Statement
         $results = db::execute($sql);
@@ -83,6 +126,8 @@ class Controller extends AppController {
 
         // Execute SQL Statement
         $results = db::execute($sql);
+
+        $this->view->inline_items = $results;
     }
 
 }
@@ -98,7 +143,11 @@ extract($controller->view->vars);
         <div class="return-shopping">
             <h4><a href="index.php">Continue shopping</a></h4>
         </div>
-        <div><h4>Your shopping cart - 1 item.</h4></div>
+        <?php if ($inline_items->num_rows > 1) { ?>
+            <div><h4><?php echo "Your shopping cart - " . $inline_items->num_rows . " items."; ?></h4></div>
+        <?php } else { ?>
+            <div><h4><?php echo "Your shopping cart - 1 item."; ?></h4></div>
+        <?php } ?>
         <div class="sibiling-div"></div>
 
         
@@ -106,29 +155,41 @@ extract($controller->view->vars);
             <div id="inline-item-list">
                 <hr>
                 <ul>
+                    <?php $subtotal = 0 ?>
+                    <?php while ($item = $inline_items->fetch_assoc()) { ?>
                     <li>
                         <table>
                             <tbody>
                                 <tr>
-                                    <td><img class="inline-item-img" src="user_upload/products/item4.jpg" ></td>
-                                    <td>Ted Bear</td>
-                                    <td>$12.5</td>
+                                    <td><img class="inline-item-img" src="<?php echo 'user_upload/products/' . $item['name']; ?>" ></td>
+                                    <td><?php echo pathinfo($product['name'])['filename'] ?></td>
+                                    <td><?php echo '$' . $item['price']; ?></td>
                                     <td>&times;</td>
-                                    <td><input type="text" value="1" style="width:30px"></td>
-                                    <td>$12.5</td>
+                                    <td><input type="text" value="<?php echo $item['quantity'] ?>" style="width:30px"></td>
+                                    <td><?php echo '$' . $item['price'] * $item['quantity'] ?></td>
+                                    <td class="detele"><button>Del</button></td>
                                 </tr>
                             </tbody>
                         </table>
                     </li>
+                    <?php 
+                        $subtotal += $item['price'] * $item['quantity'];
+                        } 
+                    ?>
                 </ul>
             </div>
+
+
+
             <hr>
             <div id="inline-item-sub-total">
                 <div id="empty-cart">
                     <a href="#">Empty</a>
                 </div>
                 <div id="sub-total-count">
-                    Subtotal: $12.5
+                    <?php 
+                        echo "Subtotal: $" . $subtotal;
+                     ?>
                 </div>
                 <div class="sibiling-div"></div>
             </div>
