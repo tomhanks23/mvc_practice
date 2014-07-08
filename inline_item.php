@@ -18,29 +18,11 @@ class Controller extends AppController {
             header('Location: http://localhost/mvc_practice/index.php');
         }
 
-        // find order_id which is not payed
-        $sql = "
-          SELECT count(*) count
-            FROM user_order
-           WHERE user_id = $user_id
-             AND order_status = 1
-          ";
+        if ($_SESSION['state_flag'] == '1') {
 
-        // Execute SQL Statement
-        $results = db::execute($sql);
-        $row = $results->fetch_assoc();
-
-        // print_r($results);
-        // echo '<br>';
-        // print_r($row);
-        // echo '<br>';
-        // print_r($row["count"]);
-        // exit();
-
-        if ($row["count"] > 0) {
-            
+            // find order_id which is not payed
             $sql = "
-              SELECT order_id
+              SELECT count(*) count
                 FROM user_order
                WHERE user_id = $user_id
                  AND order_status = 1
@@ -50,67 +32,88 @@ class Controller extends AppController {
             $results = db::execute($sql);
             $row = $results->fetch_assoc();
 
-            $order_id = $row['order_id'];
+            // print_r($results);
+            // echo '<br>';
+            // print_r($row);
+            // echo '<br>';
+            // print_r($row["count"]);
+            // exit();
 
-        } else {
-            // this is a new order
+            if ($row["count"] > 0) {
+                
+                $sql = "
+                  SELECT order_id
+                    FROM user_order
+                   WHERE user_id = $user_id
+                     AND order_status = 1
+                  ";
+
+                // Execute SQL Statement
+                $results = db::execute($sql);
+                $row = $results->fetch_assoc();
+
+                $order_id = $row['order_id'];
+
+            } else {
+                // this is a new order
+                $sql = "
+                    INSERT INTO user_order(
+                                user_id,
+                                date_added,
+                                order_status
+                                )
+                         VALUES (
+                                '{$user_id}',
+                                now(),
+                                1
+                                )
+                ";
+                // Execute SQL Statement
+                $results = db::execute($sql);
+
+                $order_id = $results->insert_id;
+            }
+
+            // check it has same product in this order before
             $sql = "
-                INSERT INTO user_order(
-                            user_id,
-                            date_added,
-                            order_status
-                            )
-                     VALUES (
-                            '{$user_id}',
-                            now(),
-                            1
-                            )
-            ";
-            // Execute SQL Statement
-            $results = db::execute($sql);
-
-            $order_id = $results->insert_id;
-        }
-
-        // check it has same product in this order before
-        $sql = "
-            SELECT count(1) count
-              FROM inline_item
-             WHERE order_id = '{$order_id}'
-               AND product_id = '{$_SESSION['cur_product_id']}'
-        ";
-        // Execute SQL Statement
-        $results = db::execute($sql);
-        $row = $results->fetch_assoc();
-
-        if ($row["count"] > 0) {
-            
-            $sql = "
-                UPDATE inline_item 
-                   SET quantity = quantity + {$_POST['qty']}
+                SELECT count(1) count
+                  FROM inline_item
                  WHERE order_id = '{$order_id}'
                    AND product_id = '{$_SESSION['cur_product_id']}'
             ";
+            // Execute SQL Statement
+            $results = db::execute($sql);
+            $row = $results->fetch_assoc();
 
-        } else {
+            if ($row["count"] > 0) {
+                
+                $sql = "
+                    UPDATE inline_item 
+                       SET quantity = quantity + {$_POST['qty']}
+                     WHERE order_id = '{$order_id}'
+                       AND product_id = '{$_SESSION['cur_product_id']}'
+                ";
 
-            $sql = "
-                INSERT INTO inline_item(
-                            order_id,
-                            product_id,
-                            quantity
-                            )
-                     VALUES (
-                            '{$order_id}',
-                            '{$_SESSION['cur_product_id']}',
-                            '{$_POST['qty']}'
-                            )
-            ";
+            } else {
 
+                $sql = "
+                    INSERT INTO inline_item(
+                                order_id,
+                                product_id,
+                                quantity
+                                )
+                         VALUES (
+                                '{$order_id}',
+                                '{$_SESSION['cur_product_id']}',
+                                '{$_POST['qty']}'
+                                )
+                ";
+
+            }
+
+            // Execute SQL Statement
+            $results = db::execute($sql);
         }
-
-        // Execute SQL Statement
-        $results = db::execute($sql);
 
         // show items
         $sql = "
@@ -189,7 +192,7 @@ extract($controller->view->vars);
             <hr>
             <div id="inline-item-sub-total">
                 <div id="empty-cart">
-                    <a href="#">Empty</a>
+                    <!-- <a href="#">Empty</a> -->
                 </div>
                 <div id="sub-total-count">
                     <?php 

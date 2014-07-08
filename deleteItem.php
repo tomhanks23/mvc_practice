@@ -54,6 +54,11 @@ class Controller extends AjaxController {
             $results = db::execute($sql);
         }
 
+        session_start();
+        // set state to decide whether reload form or not
+        // 1: reload; 2: not reload
+        $_SESSION['state_flag'] = '2';
+
     }
 
 }

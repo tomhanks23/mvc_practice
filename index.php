@@ -12,6 +12,10 @@ class Controller extends AppController {
 
         $_SESSION['action_forward'] = 'index.php';
 
+        // set state to decide whether reload the inline page or not
+        // 1: reload; 2: not reload
+        $_SESSION['state_flag'] = '1';
+
         // for register
         if ( $_POST['action'] == 'register' ) {
             $sql = "

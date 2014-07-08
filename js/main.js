@@ -39,7 +39,7 @@
         var inline_item_id = $(this).parent().parent().find(".hidden").val();
         
         $(this).parent().parent().parent().parent().parent().remove();
-            
+
         $.ajax({
 
 
@@ -51,8 +51,8 @@
                 inline_item_id: inline_item_id
             },
             success: function(data) {
-                // location.reload();
-                1;
+                location.reload();
+                // 1;
             },
             error: function(a, b, c) {
                 console.log(b);
