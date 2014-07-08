@@ -116,7 +116,8 @@ class Controller extends AppController {
         $sql = "
             SELECT p.name,
                    p.price,
-                   i.quantity
+                   i.quantity,
+                   i.inline_item_id
               FROM user_order o, inline_item i, product p
              WHERE o.order_id = i.order_id
                AND i.product_id = p.product_id
@@ -139,6 +140,9 @@ extract($controller->view->vars);
 ?>
 
 <div class="container">
+    <div class="overlay">
+        <?php echo $logout; ?>
+    </div>
     <div class="row">
         <div class="return-shopping">
             <h4><a href="index.php">Continue shopping</a></h4>
@@ -167,7 +171,8 @@ extract($controller->view->vars);
                                     <td>&times;</td>
                                     <td><input type="text" value="<?php echo $item['quantity'] ?>" style="width:30px"></td>
                                     <td><?php echo '$' . $item['price'] * $item['quantity'] ?></td>
-                                    <td class="detele"><button>Del</button></td>
+                                    <td class="detele"><button>Del</button><div style="content: "\f014";"></div></td>
+                                    <td width="0px"><input type="hidden" class="hidden" value="<?php echo $item['inline_item_id'] ?>"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -197,14 +202,33 @@ extract($controller->view->vars);
         <div id="total-cost">
             <ul>
                 <li>
-                    Subtotal:    $12000.50
+                    <table>
+                        <tr>
+                            <td width="180px">Subtotal:</td>
+                            <td>$<?php echo $subtotal;?></td>
+                        </tr>
+                    </table>
                 </li>
                 <li>
-                    Shipping cost:   $10000.00
+                    <table>
+                        <tr>
+                            <td width="180px">Shipping cost:</td>
+                            <td>$<?php echo round($subtotal*0.05, 2);?></td>
+                        </tr>
+                    </table>
+                       
                 </li>
-                <li>Total:    $12000.50</li>
                 <li>
-                    <button>
+                    <table>
+                        <tr>
+                            <td width="180px">Total:</td>
+                            <td>$<?php echo $subtotal + round($subtotal*0.05, 2);?></td>
+                        </tr>
+                    </table>
+
+                </li>
+                <li>
+                    <button disabled="true">
                         Go to checkout
                     </button>
 

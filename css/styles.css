@@ -67,7 +67,7 @@ div .reurn-shopping {
 
 #total-cost {
     float: right;
-    margin-right: 30px;
+    margin: auto;
     font-size: 20px;
     border-radius: 10px;
     border: 1px gray solid;

@@ -28,7 +28,7 @@
         <?php if ( isset($_SESSION['user_id']) ) { ?>
 
             <div class="login-user">
-                <?php echo $user_name ?>
+                <?php echo 'Hi, ' . $_SESSION['user_name'] . '! ' ?>
                 <a href="" class="logout">Log Out</a>
             </div>
             
