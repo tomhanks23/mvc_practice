@@ -61,5 +61,32 @@
         })
     })
 
+    $("#inline-item-list ul").on("change", "input.qty", function() {
+        var inline_item_id = $(this).parent().parent().find(".hidden").val();
+        var qty = $(this).val();
+
+        $.ajax({
+
+
+            url: "./changeQty.php",
+            type: "POST",
+            dataType: "json",
+            cache: false,
+            data: {
+                inline_item_id: inline_item_id,
+                qty: qty
+            },
+            success: function(data) {
+                location.reload();
+                // 1;
+            },
+            error: function(a, b, c) {
+                console.log(b);
+                console.log(c);
+            }
+        })
+
+    })
+
 
 })();

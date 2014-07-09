@@ -172,9 +172,9 @@ extract($controller->view->vars);
                                     <td><?php echo pathinfo($product['name'])['filename'] ?></td>
                                     <td><?php echo '$' . $item['price']; ?></td>
                                     <td>&times;</td>
-                                    <td><input type="text" value="<?php echo $item['quantity'] ?>" style="width:30px"></td>
+                                    <td><input type="text" class="qty" value="<?php echo $item['quantity'] ?>" style="width:30px"></td>
                                     <td><?php echo '$' . $item['price'] * $item['quantity'] ?></td>
-                                    <td class="detele"><button>Del</button><div style="content: "\f014";"></div></td>
+                                    <td class="detele"><button>Del</button></td>
                                     <td width="0px"><input type="hidden" class="hidden" value="<?php echo $item['inline_item_id'] ?>"></td>
                                 </tr>
                             </tbody>
